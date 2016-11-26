@@ -3,4 +3,5 @@ publish
 bin
 obj
 *.user
-.vs
+*.vs
+*.nupkg
