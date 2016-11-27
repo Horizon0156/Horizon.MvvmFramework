@@ -33,7 +33,7 @@
     <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>Properties\Horizon777.pfx</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>Properties\Horizon.MvvmFramework.pfx</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Horizon.MvvmFramework, Version=1.0.0.0, Culture=neutral, PublicKeyToken=2596b24509c660de, processorArchitecture=MSIL">
@@ -66,7 +66,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Properties\Horizon777.pfx" />
+    <None Include="Properties\Horizon.MvvmFramework.pfx" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
