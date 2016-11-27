@@ -6,9 +6,11 @@
     <title>$title$</title>
     <authors>$author$</authors>
     <owners>$author$</owners>
+    <iconUrl>https://raw.githubusercontent.com/Horizon0156/Horizon.MvvmFramework/develop/Icon.png</iconUrl>
+    <projectUrl>https://github.com/Horizon0156/Horizon.MvvmFramework</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>$description$</description>
-    <releaseNotes>Initial creation: Extracted framework from BookingHelper project.</releaseNotes>
+    <releaseNotes>Introduced Activator interface. Added default instance to the MessageHub. </releaseNotes>
     <copyright>Copyright 2016</copyright>
     <tags>MVVM</tags>
   </metadata>
