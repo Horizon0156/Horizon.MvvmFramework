@@ -1,4 +1,5 @@
-﻿using System;
+﻿using JetBrains.Annotations;
+using System;
 using System.Collections.Generic;
 
 namespace Horizon.MvvmFramework.Services
@@ -8,6 +9,9 @@ namespace Horizon.MvvmFramework.Services
     /// </summary>
     public class MessageHub : IMessenger
     {
+        [NotNull]
+        private static readonly Lazy<MessageHub> _lazyMessageHub = new Lazy<MessageHub>(() => new MessageHub());
+
         private readonly Dictionary<Type, object> _messageHandlerByType;
 
         /// <summary>
@@ -17,6 +21,11 @@ namespace Horizon.MvvmFramework.Services
         {
             _messageHandlerByType = new Dictionary<Type, object>();
         }
+
+        /// <summary>
+        /// Gets a default single instance of the MessageHub.
+        /// </summary>
+        public static MessageHub Default => _lazyMessageHub.Value;
 
         /// <inheritdoc/>
         public void Register<T>(Action<T> messageHandler)
