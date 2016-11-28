@@ -11,7 +11,7 @@ namespace Horizon.MvvmFramework.Commands
     public class CommandFactory : ICommandFactory
     {
         /// <inheritdoc/>
-        public ICommand CreateCommand(Action execute, Func<bool> canExecute)
+        public INotifiableCommand CreateCommand(Action execute, Func<bool> canExecute)
         {
             Throw.IfArgumentIsNull(execute, nameof(execute));
 
@@ -19,7 +19,7 @@ namespace Horizon.MvvmFramework.Commands
         }
 
         /// <inheritdoc/>
-        public ICommand CreateCommand<T>(Action<T> execute, Func<T, bool> canExecute)
+        public INotifiableCommand CreateCommand<T>(Action<T> execute, Func<T, bool> canExecute)
         {
             Throw.IfArgumentIsNull(execute, nameof(execute));
 
@@ -27,7 +27,7 @@ namespace Horizon.MvvmFramework.Commands
         }
 
         /// <inheritdoc/>
-        public ICommand CreateAyncCommand(Func<Task> executeAsync, Func<bool> canExecute = null)
+        public INotifiableCommand CreateAyncCommand(Func<Task> executeAsync, Func<bool> canExecute = null)
         {
             Throw.IfArgumentIsNull(executeAsync, nameof(executeAsync));
 
@@ -35,7 +35,7 @@ namespace Horizon.MvvmFramework.Commands
         }
 
         /// <inheritdoc/>
-        public ICommand CreateAyncCommand<T>(Func<T, Task> executeAsync, Func<T, bool> canExecute = null)
+        public INotifiableCommand CreateAyncCommand<T>(Func<T, Task> executeAsync, Func<T, bool> canExecute = null)
         {
             Throw.IfArgumentIsNull(executeAsync, nameof(executeAsync));
 
