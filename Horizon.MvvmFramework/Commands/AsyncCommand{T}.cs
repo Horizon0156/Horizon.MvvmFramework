@@ -1,7 +1,7 @@
-﻿using System;
-using System.Threading.Tasks;
-using Horizon.MvvmFramework.Exceptions;
+﻿using Horizon.MvvmFramework.Exceptions;
 using JetBrains.Annotations;
+using System;
+using System.Threading.Tasks;
 
 namespace Horizon.MvvmFramework.Commands
 {
@@ -21,19 +21,22 @@ namespace Horizon.MvvmFramework.Commands
 
         public override bool CanExecute(object parameter)
         {
-            var isParameterValid = parameter is T;
-
-            return isParameterValid
-                   && (_canExecute?.Invoke((T)parameter) ?? true);
+            return _canExecute == null || IsParameterValid(parameter) && _canExecute.Invoke((T)parameter);
         }
 
         public override async void Execute(object parameter)
         {
-            Throw.IfOperationIsInvalid(isOperationInvalid: !CanExecute(parameter), message: "The command can not executeAsync");
+            Throw.IfOperationIsInvalid(isOperationInvalid: !CanExecute(parameter), message: "The command can not execute");
+            Throw.IfOperationIsInvalid(isOperationInvalid: !IsParameterValid(parameter), message: $"The parameter is not of the registered type: {typeof(T).Name}.");
 
             await _executeAsync
                 .Invoke((T)parameter)
                 .ConfigureAwait(false);
+        }
+
+        private bool IsParameterValid(object parameter)
+        {
+            return parameter is T;
         }
     }
 }
