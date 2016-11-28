@@ -4,7 +4,7 @@ using JetBrains.Annotations;
 
 namespace Horizon.MvvmFramework.Commands
 {
-    internal abstract class CommandBase : ICommand
+    internal abstract class CommandBase : INotifiableCommand
     {
         public event EventHandler CanExecuteChanged;
 

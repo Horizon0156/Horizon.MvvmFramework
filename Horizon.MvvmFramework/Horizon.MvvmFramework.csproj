@@ -47,6 +47,7 @@
   <ItemGroup>
     <Compile Include="Collections\AttentiveCollection.cs" />
     <Compile Include="Collections\NotifyInnerElementChangedEventArgs.cs" />
+    <Compile Include="Commands\INotifiableCommand.cs" />
     <Compile Include="Exceptions\Throw.cs" />
     <Compile Include="Extensions\TaskExtensions.cs" />
     <Compile Include="Commands\AsyncCommand.cs" />

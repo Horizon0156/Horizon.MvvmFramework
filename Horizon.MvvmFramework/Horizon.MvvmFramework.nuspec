@@ -10,7 +10,7 @@
     <projectUrl>https://github.com/Horizon0156/Horizon.MvvmFramework</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>$description$</description>
-    <releaseNotes>Introduced Activator interface. Added default instance to the MessageHub. </releaseNotes>
+    <releaseNotes>Introduced INotifiableCommand, which allows to trigger change notifications on demand. </releaseNotes>
     <copyright>Copyright 2016</copyright>
     <tags>MVVM</tags>
   </metadata>
