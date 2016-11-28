@@ -10,7 +10,7 @@
     <projectUrl>https://github.com/Horizon0156/Horizon.MvvmFramework</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>$description$</description>
-    <releaseNotes>Introduced INotifiableCommand, which allows to trigger change notifications on demand. </releaseNotes>
+    <releaseNotes>Introduced INotifiableCommand, which allows to trigger change notifications on demand. Optimized behavior of parameterized command with tautologic canExecute delegate. </releaseNotes>
     <copyright>Copyright 2016</copyright>
     <tags>MVVM</tags>
   </metadata>
