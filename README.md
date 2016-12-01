@@ -13,28 +13,43 @@ Simply use this framework by referencing one of the following NuGet packages.
 This sections provides a short overview of the framework components and how to use them. 
 ### Components
 #### `ObserveableObject` : `INotifyPropertyChange`
-An observeable object is an object which provides change notifications for its properties. There's also a helper Method which allows a simple way for setting a property and notify a change in a single call.
-```
-private string _stringProperty;
-public string StringProperty
+An observeable object is an object which provides change notifications for its properties. There's also a helper Method `SetPropety` which allows a simple way for setting a property and notify a change if the value has changed in a single call.
+```c#
+public class TestObject : ObserveableObject
 {
-	get
-	{
-		return _stringProperty;
-	}
-	set
-	{
-		SetProperty(ref _stringProperty, Value);
-	}
+    private string _stringProperty;
+    public string StringProperty	
+    {
+        get
+        {
+            return _stringProperty;
+        }
+        set
+        {
+            SetProperty(ref _stringProperty, Value);
+        }
+    }
 }
 ```
 
 #### `ViewModel` : `ObserveableObject`
 The view model is an observeable object which provides an additional `ClosureRequested`Event used to handle a closure request from the models domain logic. The view might subscribe to this event and handle the closure independently. A call to `OnClosureRequested` will then inform the View properly.
 
+```c#
+public class TestModel : ViewModel
+{
+    public void SaveAndCloseDialog()	
+    {
+    	
+        SaveChanges();
+        OnClosureRequested();
+    }
+}
+```
+
 ####  `IActivateable`
 The `IActivateable` interface is used to identify activateable components. An activateable component implements 
-```
+```c#
 /// <summary>
 /// Activates the component asynchronously.
 /// </summary>
@@ -46,7 +61,7 @@ which might be called from the View after it was activated. The WPF module of th
 ### Commands
 #### `ICommandFactory`
 The `ICommandFactory` allows the creation of various `ICommand`, respectively `INotifiableCommand` implementations. There are methods for creating synchronous command operations as well as asnychronous command operations.
-```
+```c#
 /// <summary>
 /// Creates an asynchronous command which executes the given action.
 /// </summary>
@@ -71,14 +86,14 @@ The `INotifiableCommand` command is an `ICommand` which triggers change notifica
 and should call `NotifyChange()` to re-evaluate the execution restriciton. This design prevents unnecessary command updates like  WPFs `CommandManager` would trigger.
 #### `CommandFactory`:`ICommandFactory`
 The command factory implements an `ICommandFactory` and handles the initialization of the hidden command implementations itself. Using the factory a command can be created by defining the corresponding execution action and delegate used to determine the enabled state of the command.
-```
+```c#
 ICommandFactory commandFactory = new CommandFactory();
 SaveCommand = commandFactory.CreateCommand(SaveChanges, CanSaveChanges);
 
 private void SaveChanges()
 {
 	// Any save logic
-	dataModel.Save();
+	File.WriteAllBytes(_path, _blob);
 }
 
 private bool CanSaveChanges()
@@ -90,7 +105,7 @@ private bool CanSaveChanges()
 ### Collections
 ####`AttentiveCollection<T>` : `ObservableCollection<T>`
 The attentive collection extends an `ObservableCollection<T>` and provides notifications for changes of inner elements too. That means if any property of object ``T`` changes its value, an `InnerElementChanged` event will be fired, assumed that the property fires a change notification itself.
-```
+```c#
 public class Product : ObserveableObject
 {
 	private decimal _price;
@@ -121,7 +136,7 @@ public class ProductManagement : ViewModel
 ``` 
 ### Exceptions
 The Exceptions namespace provides a helper called `Throw`. Using the `Throw` class, common parameter or argument validations can be inserted in your code without using a couple of `if` statements at the beginning of your method. Within the current release, the following Validations are included:
-```
+```c#
 /// <summary>
 /// Throws an exception if the provided argument is null.
 /// </summary>
@@ -152,7 +167,7 @@ public static void IfOperationIsInvalid(bool isOperationInvalid, [NotNull] strin
 
 Example usage:
 
-```
+```c#
 public void DoSomething(object importantParameter)
 {
 	Throw.IfArgumentIsNull(importantParameter, nameof(importantParameter));
@@ -169,7 +184,7 @@ Currently the Extensions namespace provides a Task extension used to execute an 
 wn state. There might be a point in your application when you have to use 'async void', because you can not return an operational Task. If your asynchronous method does not handle all possible exceptions, the 
 `OnUnobservedException` task extension catches any unhandled exception and continues with the given action. It improves the readability of your code, since you don't have to write your `try`/`catch` blocks over and over again.
 
-```
+```c#
 public void LoadData()
 {
 	LoadDataAsync().OnUnobservedException(LogExceptionAndTerminateApplication);
@@ -179,3 +194,11 @@ public void LoadData()
 ### Services
 TBD
 
+### WPF Behaviors
+TBD
+
+### WPF Extensions
+TBD
+
+## Example: Hello World Application
+TBD
