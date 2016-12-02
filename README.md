@@ -250,8 +250,19 @@ public class View : Window
 	}
 }
 ```
-It's up to you which operations will be delegated to other components while simply sending a message ;)
+It's up to you which operations will be delegated to other components while simply sending a message ;) Keep in mind that all components have to use the same instance of an `IMessenger` to establish a communication. The framework provides an implementaions of an `IMessenger` called `MessageHub`. You can use the default instance or use an IOC container to register a singleton.
+```c#
+// Provide the default instance
+var view = new View(MessageHub.Default);
+var viewModel = new DialogViewMode(MessageHub.Default);
 
+// Using an IOC container, SimpleInjector for example
+// https://simpleinjector.org/index.html
+var container = new SimpleInjector.Container();
+container.RegisterSingleton<IMessenger>(() => new MessageHub());
+var view = _container.GetInstance<View>();
+var viewMode = _container.GetInstance<DialogViewModel>();
+```
 ### WPF extension package
 The WPF NuGet packages of this framework provides a couple of extensions and behaviours especially written for Microsoft's WPF framework. Therefore, this packages isn't platform independent.
 
@@ -260,14 +271,34 @@ The WPF NuGet packages of this framework provides a couple of extensions and beh
 The ViewModel behavior can be attached to any window. An attached window will handle the ViewModel of the window as it's supposed to be used with this framework. This means, the Window triggers an IActivable component if the window gets activated. In addition the window will close automatically if the ViewModel requests a closure using the `OnClosureRequested` method.
 Nevertheless, the DataContext of the Window has to be set properly. Please have a look at the *Samples* to see the setup and registration of a MVVM application using this behavior.
 ##### `AutoScrollBehavior`
-...
+Implements an auto scrolling for a scroll viewer. If the layout changes, the view will scroll to the last element.
 ##### `InputRestrictionBehavior`
-...
+Restricts the input to a textbox by validating the entered text using a regular expression. The follwing example shows a restriction applied to a textbox so the user is only able to enter a valid _hh:mm_ time representation.
+```xml
+<TextBox Width="45"
+         Margin="5"
+         VerticalContentAlignment="Center"
+         Text="{Binding Time,
+                        Converter={StaticResource TimeToStringConverter},
+                        Mode=TwoWay,
+                        UpdateSourceTrigger=Explicit}">
+	<i:Interaction.Behaviors>
+	    <behaviors:InputRestrictionBehavior InputExpression="^[0-2]?[0-9]?:?[0-5]?[0-9]?$" />
+        </i:Interaction.Behaviors>
+</TextBox>
+```
 ##### `MinimizeToTrayBehavior`
-...
+The `MinimizeToTrayBehavior` behavior automatically sends the application to the notification area if the window, where this behavior is attached to minimizes.
 #### Extensions
 ##### `Application.InjectResourceDictionary(...)`
-... 
+Using the `InjectResourceDictionary` extension a resource dictionary can be loaded from code using a single line expression. This is very useful if you write your own application bootstrapper instead of using the empty App.xaml and the corresponding code behind file.
+```c#
+var app = new Application();
+app.InjectResourceDictionary("MahApps.Metro", "Styles/Controls.xaml");
+app.InjectResourceDictionary("MahApps.Metro", "Styles/Fonts.xaml");
+app.InjectResourceDictionary("MahApps.Metro", "Styles/Colors.xaml")
 
-## Example: Hello World Application
-TBD: Add to repo.
+// Setup windows and VMs...
+
+app.Run();
+```
