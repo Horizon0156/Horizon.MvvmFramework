@@ -88,18 +88,30 @@ and should call `NotifyChange()` to re-evaluate the execution restriciton. This 
 The command factory implements an `ICommandFactory` and handles the initialization of the hidden command implementations itself. Using the factory a command can be created by defining the corresponding execution action and delegate used to determine the enabled state of the command.
 ```c#
 ICommandFactory commandFactory = new CommandFactory();
-SaveCommand = commandFactory.CreateCommand(SaveChanges, CanSaveChanges);
+DeleteCommand = commandFactory.CreateCommand(DeleteItem, CanDeleteItem);
 
-private void SaveChanges()
+public object SelectedItem
 {
-	// Any save logic
-	File.WriteAllBytes(_path, _blob);
+	get
+	{
+		return _selectedItem;
+	}
+	set
+	{
+		SetProperty(ref _selectedItem, value);
+		DeleteCommand.NotifyChange();
+	}
+
 }
 
-private bool CanSaveChanges()
+private void DeleteItem()
 {
-	// Any save restriciton
-	return dataModel.HasChanges();
+	Items.Remove(SelectedItem);
+}
+
+private bool CanDeleteItem()
+{
+	return SelectedItem != null;
 }
 ``` 
 ### Collections
@@ -192,13 +204,70 @@ public void LoadData()
 ```
 
 ### Services
-TBD
+The service namespace includes a messenger service used to establish a bi-directional communication between models, views or view-models without violating the MVVM pattern. Using MVVM straight forwards it's a challenge to fire up sub-dialogs, setting the focus, or simply showing a message box while separating the View from the ViewModel and keeping the code unit testable.
 
-### WPF Behaviors
-TBD
+The `IMessenger` is an independent component which can be passed to any component using dependency injection. Afterwards a component can sent a message, which another component is able to handle to. Using this messenger pattern, a ViewModel may send send a message or an instance of new ViewModel which should open a sub-dialog. The View or a supervising component uses the `IMessenger` to register a handle for these specific message types and handle them properly.  
 
-### WPF Extensions
-TBD
+```C#
+public class Message
+{
+	public string Message { get; set; }
+}
+
+public class DialogViewModel : ViewModel
+{
+	public DialogViewModel(IMessenger messenger)
+	{
+		_messenger = messenger;
+	}
+	
+	public void ShowMessage()
+	{
+		var message = new Message { Message = "Hi from the ViewModel" };
+		_messenger.Send(messange);
+	}
+}
+
+public class View : Window
+{
+	public View(IMessenger messenger)
+	{
+		InitializeComponents();
+		
+		_messenger = messenger;
+		_messenger.Register<Message>(ShowMessage);
+	}
+	
+	private void ShowMessage(Message message)
+	{
+		// View specific code
+		MessageBox.Show(message.Message);
+		
+		// Or use custom dialogs
+		var messageWindow = new MessageWindow();
+		messageWindow.DataContext = message;
+		messageWindow.Show();
+	}
+}
+```
+It's up to you which operations will be delegated to other components while simply sending a message ;)
+
+### WPF extension package
+The WPF NuGet packages of this framework provides a couple of extensions and behaviours especially written for Microsoft's WPF framework. Therefore, this packages isn't platform independent.
+
+#### Behaviors
+##### `ViewModelBehavior`
+The ViewModel behavior can be attached to any window. An attached window will handle the ViewModel of the window as it's supposed to be used with this framework. This means, the Window triggers an IActivable component if the window gets activated. In addition the window will close automatically if the ViewModel requests a closure using the `OnClosureRequested` method.
+Nevertheless, the DataContext of the Window has to be set properly. Please have a look at the *Samples* to see the setup and registration of a MVVM application using this behavior.
+##### `AutoScrollBehavior`
+...
+##### `InputRestrictionBehavior`
+...
+##### `MinimizeToTrayBehavior`
+...
+#### Extensions
+##### `Application.InjectResourceDictionary(...)`
+... 
 
 ## Example: Hello World Application
-TBD
+TBD: Add to repo.
