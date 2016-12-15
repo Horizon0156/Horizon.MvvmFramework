@@ -59,6 +59,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Behaviors\AutoScrollBehavior.cs" />
+    <Compile Include="Behaviors\InitialFocusBehavior.cs" />
     <Compile Include="Behaviors\ViewModelBehavior.cs" />
     <Compile Include="Behaviors\InputRestrictionBehavior.cs" />
     <Compile Include="Behaviors\MinimizeToTrayBehavior.cs" />

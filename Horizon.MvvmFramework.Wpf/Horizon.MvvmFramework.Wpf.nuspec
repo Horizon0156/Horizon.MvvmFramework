@@ -10,7 +10,7 @@
     <projectUrl>https://github.com/Horizon0156/Horizon.MvvmFramework</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>$description$</description>
-    <releaseNotes>Replaced Initialization behavior with a new ViewModelBehavior. The ViewModelBehavior allows an asynchronous activation of the VM and connects the Closure event automatically.</releaseNotes>
+    <releaseNotes>Added InitialFocusBehavior</releaseNotes>
     <copyright>Copyright 2016</copyright>
     <tags>MVVM WPF</tags>
   </metadata>
