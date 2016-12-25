@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Interactivity;
+using JetBrains.Annotations;
 
 namespace Horizon.MvvmFramework.Wpf.Behaviors
 {
@@ -8,6 +9,13 @@ namespace Horizon.MvvmFramework.Wpf.Behaviors
     /// </summary>
     public class InitialFocusBehavior : Behavior<FrameworkElement>
     {
+        /// <summary>
+        /// Gets or sets a fallback element which receives the Focus if the attached element can not 
+        /// receive the initial focus.
+        /// </summary>
+        [CanBeNull]
+        public FrameworkElement FallbackElement { get; set; }
+
         /// <inheritdoc/>
         protected override void OnAttached()
         {
@@ -26,8 +34,20 @@ namespace Horizon.MvvmFramework.Wpf.Behaviors
 
         private void EnsureInitialFocusIsSetProperly(object sender, RoutedEventArgs e)
         {
-            AssociatedObject.Focus();
+            if (CanAssociatedObjectBeFocused())
+            {
+                AssociatedObject.Focus();
+            }
+            else
+            {
+                FallbackElement?.Focus();
+            }
             AssociatedObject.Loaded -= EnsureInitialFocusIsSetProperly;
+        }
+
+        private bool CanAssociatedObjectBeFocused()
+        {
+            return AssociatedObject.Focusable && AssociatedObject.IsEnabled && AssociatedObject.IsVisible;
         }
     }
 }

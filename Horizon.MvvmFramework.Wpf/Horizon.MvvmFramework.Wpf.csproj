@@ -63,6 +63,7 @@
     <Compile Include="Behaviors\ViewModelBehavior.cs" />
     <Compile Include="Behaviors\InputRestrictionBehavior.cs" />
     <Compile Include="Behaviors\MinimizeToTrayBehavior.cs" />
+    <Compile Include="Bindings\BindingProxy.cs" />
     <Compile Include="Extensions\ApplicationExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -70,6 +71,7 @@
     <None Include="Properties\Horizon.MvvmFramework.pfx" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
