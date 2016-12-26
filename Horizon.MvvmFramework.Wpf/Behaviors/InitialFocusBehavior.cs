@@ -10,11 +10,30 @@ namespace Horizon.MvvmFramework.Wpf.Behaviors
     public class InitialFocusBehavior : Behavior<FrameworkElement>
     {
         /// <summary>
+        /// Dependency property for the <see cref="FallbackElement"/>
+        /// </summary>
+        public static DependencyProperty FallbackElementProperty = DependencyProperty.Register(
+            "FallbackElement",
+            typeof(FrameworkElement),
+            typeof(InitialFocusBehavior),
+            new FrameworkPropertyMetadata(defaultValue: null));
+
+        /// <summary>
         /// Gets or sets a fallback element which receives the Focus if the attached element can not 
         /// receive the initial focus.
         /// </summary>
         [CanBeNull]
-        public FrameworkElement FallbackElement { get; set; }
+        public FrameworkElement FallbackElement
+        {
+            get
+            {
+                return (FrameworkElement) GetValue(FallbackElementProperty);
+            }
+            set
+            {
+                SetValue(FallbackElementProperty, value);
+            }
+        }
 
         /// <inheritdoc/>
         protected override void OnAttached()
