@@ -10,7 +10,7 @@
     <projectUrl>https://github.com/Horizon0156/Horizon.MvvmFramework</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>$description$</description>
-    <releaseNotes>Added fallback element to InitialFocusBehavior. Introduced BindingProxy.</releaseNotes>
+    <releaseNotes>Added DependencyProeprty for the FallbackElement of the InitialFocusBehavior to allow a binding to a XAML element. Introduced InvertedBooleanConverter.</releaseNotes>
     <copyright>Copyright 2016</copyright>
     <tags>MVVM WPF</tags>
   </metadata>
