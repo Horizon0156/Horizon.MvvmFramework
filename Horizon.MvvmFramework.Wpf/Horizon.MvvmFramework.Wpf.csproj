@@ -64,6 +64,7 @@
     <Compile Include="Behaviors\InputRestrictionBehavior.cs" />
     <Compile Include="Behaviors\MinimizeToTrayBehavior.cs" />
     <Compile Include="Bindings\BindingProxy.cs" />
+    <Compile Include="Converter\InvertedBooleanConverter.cs" />
     <Compile Include="Extensions\ApplicationExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
