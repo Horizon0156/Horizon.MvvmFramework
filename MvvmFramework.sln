@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Horizon.MvvmFramework", "Ho
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Horizon.MvvmFramework.Wpf", "Horizon.MvvmFramework.Wpf\Horizon.MvvmFramework.Wpf.csproj", "{CBC9E782-C74A-417A-A045-E6E6F7AA9126}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Horizon.MvvmFramework.Wpf.Tests", "Horizon.MvvmFramework.Wpf.Tests\Horizon.MvvmFramework.Wpf.Tests.csproj", "{63263725-D03F-4D6D-ADBE-271F2582B9F3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{CBC9E782-C74A-417A-A045-E6E6F7AA9126}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CBC9E782-C74A-417A-A045-E6E6F7AA9126}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CBC9E782-C74A-417A-A045-E6E6F7AA9126}.Release|Any CPU.Build.0 = Release|Any CPU
+		{63263725-D03F-4D6D-ADBE-271F2582B9F3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{63263725-D03F-4D6D-ADBE-271F2582B9F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{63263725-D03F-4D6D-ADBE-271F2582B9F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{63263725-D03F-4D6D-ADBE-271F2582B9F3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
