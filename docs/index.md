@@ -129,7 +129,7 @@ private bool CanDeleteItem()
 
 ### Collections
 
-####`AttentiveCollection<T>` : `ObservableCollection<T>`
+#### `AttentiveCollection<T>` : `ObservableCollection<T>`
 The attentive collection extends an `ObservableCollection<T>` and provides notifications for changes of inner elements too. That means if any property of object ``T`` changes its value, an `InnerElementChanged` event will be fired, assumed that the property fires a change notification itself.
 
 ```c#
