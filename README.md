@@ -8,13 +8,14 @@ The main component is build as a portable class library so it can be used "view"
 ## Installation
 Simply use this framework by referencing one of the following NuGet packages.
 
-* https://www.nuget.org/packages/Horizon.MvvmFramework/
-* https://www.nuget.org/packages/Horizon.MvvmFramework.Wpf/
+* <https://www.nuget.org/packages/Horizon.MvvmFramework/>
+* <https://www.nuget.org/packages/Horizon.MvvmFramework.Wpf/>
 
 ## Documentation
 This sections provides a short overview of the framework components and how to use them. 
 
 ### Components
+
 #### `ObserveableObject` : `INotifyPropertyChange`
 An observeable object is an object which provides change notifications for its properties. There's also a helper Method `SetPropety` which allows a simple way for setting a property and notify a change if the value has changed in a single call.
 
@@ -65,6 +66,7 @@ Task ActivateAsync(bool isInitialActivation);
 which might be called from the View after it was activated. The WPF module of this framework provides a behavior which automatically connects the `ClosureEvent` to the DataContext and triggers the activation if the window gets activated.  
 
 ### Commands
+
 #### `ICommandFactory`
 The `ICommandFactory` allows the creation of various `ICommand`, respectively `INotifiableCommand` implementations. There are methods for creating synchronous command operations as well as asnychronous command operations.
 
@@ -126,6 +128,7 @@ private bool CanDeleteItem()
 ``` 
 
 ### Collections
+
 ####`AttentiveCollection<T>` : `ObservableCollection<T>`
 The attentive collection extends an `ObservableCollection<T>` and provides notifications for changes of inner elements too. That means if any property of object ``T`` changes its value, an `InnerElementChanged` event will be fired, assumed that the property fires a change notification itself.
 
@@ -284,6 +287,7 @@ var viewMode = _container.GetInstance<DialogViewModel>();
 The WPF NuGet packages of this framework provides a couple of extensions and behaviours especially written for Microsoft's WPF framework. Therefore, this packages isn't platform independent.
 
 #### Behaviors
+
 ##### `ViewModelBehavior`
 The ViewModel behavior can be attached to any window. An attached window will handle the ViewModel of the window as it's supposed to be used with this framework. This means, the Window triggers an IActivable component if the window gets activated. In addition the window will close automatically if the ViewModel requests a closure using the `OnClosureRequested` method.
 Nevertheless, the DataContext of the Window has to be set properly. Please have a look at the *Samples* to see the setup and registration of a MVVM application using this behavior.
@@ -307,10 +311,12 @@ Restricts the input to a textbox by validating the entered text using a regular 
         </i:Interaction.Behaviors>
 </TextBox>
 ```
+
 ##### `MinimizeToTrayBehavior`
 The `MinimizeToTrayBehavior` behavior automatically sends the application to the notification area if the window, where this behavior is attached to minimizes.
 
 #### Extensions
+
 ##### `Application.InjectResourceDictionary(...)`
 Using the `InjectResourceDictionary` extension a resource dictionary can be loaded from code using a single line expression. This is very useful if you write your own application bootstrapper instead of using the empty App.xaml and the corresponding code behind file.
 
