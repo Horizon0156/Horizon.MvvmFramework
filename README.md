@@ -1,4 +1,5 @@
 ![logo](https://raw.githubusercontent.com/Horizon0156/Horizon.MvvmFramework/master/Icon.png)
+
 # Horizon.MvvmFramework
 The MvvmFramework is a simple and lightweight framework supposed to speed-up the development of MVVM (Model-View-ViewModel) applications as well as to reduce code of common operations such as change notifications.
 
@@ -6,14 +7,17 @@ The main component is build as a portable class library so it can be used "view"
 
 ## Installation
 Simply use this framework by referencing one of the following NuGet packages.
+
 * https://www.nuget.org/packages/Horizon.MvvmFramework/
 * https://www.nuget.org/packages/Horizon.MvvmFramework.Wpf/
 
 ## Documentation
 This sections provides a short overview of the framework components and how to use them. 
+
 ### Components
 #### `ObserveableObject` : `INotifyPropertyChange`
 An observeable object is an object which provides change notifications for its properties. There's also a helper Method `SetPropety` which allows a simple way for setting a property and notify a change if the value has changed in a single call.
+
 ```c#
 public class TestObject : ObserveableObject
 {
@@ -49,6 +53,7 @@ public class TestModel : ViewModel
 
 ####  `IActivateable`
 The `IActivateable` interface is used to identify activateable components. An activateable component implements 
+
 ```c#
 /// <summary>
 /// Activates the component asynchronously.
@@ -58,9 +63,11 @@ The `IActivateable` interface is used to identify activateable components. An ac
 Task ActivateAsync(bool isInitialActivation);
 ```
 which might be called from the View after it was activated. The WPF module of this framework provides a behavior which automatically connects the `ClosureEvent` to the DataContext and triggers the activation if the window gets activated.  
+
 ### Commands
 #### `ICommandFactory`
 The `ICommandFactory` allows the creation of various `ICommand`, respectively `INotifiableCommand` implementations. There are methods for creating synchronous command operations as well as asnychronous command operations.
+
 ```c#
 /// <summary>
 /// Creates an asynchronous command which executes the given action.
@@ -81,11 +88,14 @@ INotifiableCommand CreateAyncCommand([NotNull] Func<Task> executeAsync, [CanBeNu
 /// <exception cref="ArgumentNullException">If the execution action is not set. </exception>
 INotifiableCommand CreateAyncCommand<T>([NotNull] Func<T, Task> executeAsync, [CanBeNull] Func<T, bool> canExecute = null);
 ```
+
 #### `INotifiableCommand`:`ICommand`
 The `INotifiableCommand` command is an `ICommand` which triggers change notifications on demand. The developer has to decide when a command might get available
 and should call `NotifyChange()` to re-evaluate the execution restriciton. This design prevents unnecessary command updates like  WPFs `CommandManager` would trigger.
+
 #### `CommandFactory`:`ICommandFactory`
 The command factory implements an `ICommandFactory` and handles the initialization of the hidden command implementations itself. Using the factory a command can be created by defining the corresponding execution action and delegate used to determine the enabled state of the command.
+
 ```c#
 ICommandFactory commandFactory = new CommandFactory();
 DeleteCommand = commandFactory.CreateCommand(DeleteItem, CanDeleteItem);
@@ -114,9 +124,11 @@ private bool CanDeleteItem()
 	return SelectedItem != null;
 }
 ``` 
+
 ### Collections
 ####`AttentiveCollection<T>` : `ObservableCollection<T>`
 The attentive collection extends an `ObservableCollection<T>` and provides notifications for changes of inner elements too. That means if any property of object ``T`` changes its value, an `InnerElementChanged` event will be fired, assumed that the property fires a change notification itself.
+
 ```c#
 public class Product : ObserveableObject
 {
@@ -146,8 +158,10 @@ public class ProductManagement : ViewModel
 }
 
 ``` 
+
 ### Exceptions
 The Exceptions namespace provides a helper called `Throw`. Using the `Throw` class, common parameter or argument validations can be inserted in your code without using a couple of `if` statements at the beginning of your method. Within the current release, the following Validations are included:
+
 ```c#
 /// <summary>
 /// Throws an exception if the provided argument is null.
@@ -250,7 +264,9 @@ public class View : Window
 	}
 }
 ```
+
 It's up to you which operations will be delegated to other components while simply sending a message ;) Keep in mind that all components have to use the same instance of an `IMessenger` to establish a communication. The framework provides an implementaions of an `IMessenger` called `MessageHub`. You can use the default instance or use an IOC container to register a singleton.
+
 ```c#
 // Provide the default instance
 var view = new View(MessageHub.Default);
@@ -263,6 +279,7 @@ container.RegisterSingleton<IMessenger>(() => new MessageHub());
 var view = _container.GetInstance<View>();
 var viewMode = _container.GetInstance<DialogViewModel>();
 ```
+
 ### WPF extension package
 The WPF NuGet packages of this framework provides a couple of extensions and behaviours especially written for Microsoft's WPF framework. Therefore, this packages isn't platform independent.
 
@@ -270,10 +287,13 @@ The WPF NuGet packages of this framework provides a couple of extensions and beh
 ##### `ViewModelBehavior`
 The ViewModel behavior can be attached to any window. An attached window will handle the ViewModel of the window as it's supposed to be used with this framework. This means, the Window triggers an IActivable component if the window gets activated. In addition the window will close automatically if the ViewModel requests a closure using the `OnClosureRequested` method.
 Nevertheless, the DataContext of the Window has to be set properly. Please have a look at the *Samples* to see the setup and registration of a MVVM application using this behavior.
+
 ##### `AutoScrollBehavior`
 Implements an auto scrolling for a scroll viewer. If the layout changes, the view will scroll to the last element.
+
 ##### `InputRestrictionBehavior`
 Restricts the input to a textbox by validating the entered text using a regular expression. The follwing example shows a restriction applied to a textbox so the user is only able to enter a valid _hh:mm_ time representation.
+
 ```xml
 <TextBox Width="45"
          Margin="5"
@@ -289,9 +309,11 @@ Restricts the input to a textbox by validating the entered text using a regular 
 ```
 ##### `MinimizeToTrayBehavior`
 The `MinimizeToTrayBehavior` behavior automatically sends the application to the notification area if the window, where this behavior is attached to minimizes.
+
 #### Extensions
 ##### `Application.InjectResourceDictionary(...)`
 Using the `InjectResourceDictionary` extension a resource dictionary can be loaded from code using a single line expression. This is very useful if you write your own application bootstrapper instead of using the empty App.xaml and the corresponding code behind file.
+
 ```c#
 var app = new Application();
 app.InjectResourceDictionary("MahApps.Metro", "Styles/Controls.xaml");
